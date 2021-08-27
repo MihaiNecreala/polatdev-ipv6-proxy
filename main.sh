@@ -8,6 +8,8 @@ WORKDIR="/home/proxy-installer"
 WORKDATA="${WORKDIR}/data.txt"
 mkdir $WORKDIR && cd $_
 
+#IP4=$(curl -4 -s ifconfig.co)
+#IP6=$(curl -6 -s ifconfig.co | cut -f1-2 -d':')
 IP4=""
 IP6="2a0a:fa47"
 
@@ -24,8 +26,7 @@ gen_3proxy >/usr/local/etc/3proxy/3proxy.cfg
 cat >>/etc/rc.local <<EOF
 bash ${WORKDIR}/boot_iptables.sh
 bash ${WORKDIR}/boot_ifconfig.sh
-ulimit -n 4096
-systemctl enable 3proxy
+ulimit -n 2048
 service 3proxy start
 EOF
 
