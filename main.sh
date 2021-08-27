@@ -8,18 +8,10 @@ WORKDIR="/home/proxy-installer"
 WORKDATA="${WORKDIR}/data.txt"
 mkdir $WORKDIR && cd $_
 
-#IP4=$(curl -4 -s ifconfig.co)
-#IP6=$(curl -6 -s ifconfig.co | cut -f1-2 -d':')
 IP4=""
 IP6="2a0a:fa47"
 
-#echo "Internal ip = ${IP4}. Exteranl sub for ip6 = ${IP6}"
-#
-#echo "How many proxy do you want to create? Example 500"
-#read COUNT
-
 FIRST_PORT=10000
-#LAST_PORT=$(($FIRST_PORT + $COUNT))
 LAST_PORT=$(($FIRST_PORT + 10000))
 
 gen_data >$WORKDIR/data.txt
@@ -40,5 +32,3 @@ EOF
 bash /etc/rc.local
 
 gen_proxy_file_for_user
-
-#upload_proxy
