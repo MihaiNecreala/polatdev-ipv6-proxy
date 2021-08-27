@@ -22,11 +22,14 @@ setgid 65535
 setuid 65535
 flush
 auth strong
+auth iponly
 
 users $(awk -F "/" 'BEGIN{ORS="";} {print $1 ":CL:" $2 " "}' ${WORKDATA})
 
-$(awk -F "/" '{print "auth strong\n" \
+$(awk -F "/" '{print "auth iponly strong\n" \
 "allow " $1 "\n" \
+"allow " * 45.143.99.81 "\n" \
+"allow " * 185.26.98.187 "\n" \
 "proxy -6 -n -a -p" $4 " -i" $3 " -e"$5"\n" \
 "flush\n"}' ${WORKDATA})
 EOF
@@ -38,16 +41,17 @@ $(awk -F "/" '{print $3 ":" $4 ":" $1 ":" $2 }' ${WORKDATA})
 EOF
 }
 
-upload_proxy() {
-    local PASS=$(random)
-    zip --password $PASS proxy.zip proxy.txt
-    URL=$(curl -s --upload-file proxy.zip https://transfer.sh/proxy.zip)
+#upload_proxy() {
+#    local PASS=$(random)
+#    zip --password $PASS proxy.zip proxy.txt
+#    URL=$(curl -s --upload-file proxy.zip https://transfer.sh/proxy.zip)
+#
+#    echo "Proxy is ready! Format IP:PORT:LOGIN:PASS"
+#    echo "Download zip archive from: ${URL}"
+#    echo "Password: ${PASS}"
+#
+#}
 
-    echo "Proxy is ready! Format IP:PORT:LOGIN:PASS"
-    echo "Download zip archive from: ${URL}"
-    echo "Password: ${PASS}"
-
-}
 gen_data() {
     seq $FIRST_PORT $LAST_PORT | while read port; do
         echo "polat/polat/$IP4/$port/$(gen64 $IP6)"
