@@ -9,5 +9,5 @@ gen64() {
 		echo "${array[$RANDOM % 16]}${array[$RANDOM % 16]}${array[$RANDOM % 16]}${array[$RANDOM % 16]}"
 	}
 	#echo "$1:$(ip64):$(ip64):$(ip64):$(ip64):$(ip64):$(ip64)" // 32 subnet
-	echo "$1:$(ip64):$(ip64):$(ip64):$(ip64):$(ip64)" # 35 subnet
+	echo "$1:$(ip64):$(ip64):$(ip64):$(ip64):$(ip64)"
 }

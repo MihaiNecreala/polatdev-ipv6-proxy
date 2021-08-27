@@ -1,19 +1,19 @@
 install_3proxy() {
-    echo "installing 3proxy"
-    URL="https://github.com/z3APA3A/3proxy/archive/3proxy-0.8.6.tar.gz"
-    wget -qO- $URL | bsdtar -xvf-
-    cd 3proxy-3proxy-0.8.6
-    make -f Makefile.Linux
-    mkdir -p /usr/local/etc/3proxy/{bin,logs,stat}
-    cp src/3proxy /usr/local/etc/3proxy/bin/
-    cp ./scripts/rc.d/proxy.sh /etc/init.d/3proxy
-    chmod +x /etc/init.d/3proxy
-    chkconfig 3proxy on
-    cd $WORKDIR
+  echo "installing 3proxy"
+  URL="https://github.com/z3APA3A/3proxy/archive/3proxy-0.8.6.tar.gz"
+  wget -qO- $URL | bsdtar -xvf-
+  cd 3proxy-3proxy-0.8.6
+  make -f Makefile.Linux
+  mkdir -p /usr/local/etc/3proxy/{bin,logs,stat}
+  cp src/3proxy /usr/local/etc/3proxy/bin/
+  cp ./scripts/rc.d/proxy.sh /etc/init.d/3proxy
+  chmod +x /etc/init.d/3proxy
+  chkconfig 3proxy on
+  cd $WORKDIR
 }
 
 gen_3proxy() {
-    cat <<EOF
+  cat <<EOF
 daemon
 maxconn 1000
 nscache 65536
@@ -28,15 +28,15 @@ users $(awk -F "/" 'BEGIN{ORS="";} {print $1 ":CL:" $2 " "}' ${WORKDATA})
 
 $(awk -F "/" '{print "auth iponly strong\n" \
 "allow " $1 "\n" \
-"allow " * 45.143.99.81 "\n" \
-"allow " * 185.26.98.187 "\n" \
+"allow * 45.143.99.81 \n" \
+"allow * 185.26.98.187 \n" \
 "proxy -6 -n -a -p" $4 " -i" $3 " -e"$5"\n" \
 "flush\n"}' ${WORKDATA})
 EOF
 }
 
 gen_proxy_file_for_user() {
-    cat >proxy.txt <<EOF
+  cat >proxy.txt <<EOF
 $(awk -F "/" '{print $3 ":" $4 ":" $1 ":" $2 }' ${WORKDATA})
 EOF
 }
@@ -53,19 +53,19 @@ EOF
 #}
 
 gen_data() {
-    seq $FIRST_PORT $LAST_PORT | while read port; do
-        echo "polat/polat/$IP4/$port/$(gen64 $IP6)"
-    done
+  seq $FIRST_PORT $LAST_PORT | while read port; do
+    echo "polat/polat/$IP4/$port/$(gen64 $IP6)"
+  done
 }
 
 gen_iptables() {
-    cat <<EOF
+  cat <<EOF
     $(awk -F "/" '{print "iptables -I INPUT -p tcp --dport " $4 "  -m state --state NEW -j ACCEPT"}' ${WORKDATA}) 
 EOF
 }
 
 gen_ifconfig() {
-    cat <<EOF
+  cat <<EOF
 $(awk -F "/" '{print "ifconfig ens32 inet6 add " $5 "/64"}' ${WORKDATA})
 EOF
 }
