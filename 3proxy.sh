@@ -21,14 +21,12 @@ timeouts 1 5 30 60 180 1800 15 60
 setgid 65535
 setuid 65535
 flush
-auth strong iponly
+auth strong
 
 users polat:CL:polat
 
-$(awk -F "/" '{print "auth iponly strong\n" \
+$(awk -F "/" '{print "auth strong\n" \
 "allow " $1 "\n" \
-"allow * 185.26.98.187" "\n" \
-"allow * 45.143.99.81" "\n" \
 "proxy -6 -n -a -p" $4 " -i" $3 " -e"$5"\n" \
 "flush\n"}' ${WORKDATA})
 EOF
