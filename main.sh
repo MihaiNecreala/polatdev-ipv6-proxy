@@ -8,9 +8,9 @@ WORKDIR="/home/proxy-installer"
 WORKDATA="${WORKDIR}/data.txt"
 mkdir $WORKDIR && cd $_
 
-IP4=$(curl -4 -s ifconfig.co)
+#IP4=$(curl -4 -s ifconfig.co)
 #IP6=$(curl -6 -s ifconfig.co | cut -f1-2 -d':')
-IP6="2a0a:fa47"
+#IP6="2a0a:fa47"
 
 FIRST_PORT=10000
 LAST_PORT=$(($FIRST_PORT + 10000))
