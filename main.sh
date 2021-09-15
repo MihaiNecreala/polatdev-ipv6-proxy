@@ -25,11 +25,11 @@ gen_3proxy >/usr/local/etc/3proxy/3proxy.cfg
 cat >>/etc/rc.local <<EOF
 bash ${WORKDIR}/boot_iptables.sh
 bash ${WORKDIR}/boot_ifconfig.sh
-echo "root soft nofile 10240" >> /etc/security/limits.conf
-echo "root hard nofile 10240" >> /etc/security/limits.conf
-echo "65536 soft nofile 10240" >> /etc/security/limits.conf
-echo "65536 hard nofile 10240" >> /etc/security/limits.conf
-ulimit -n 10240
+echo "root soft nofile 65536" >> /etc/security/limits.conf
+echo "root hard nofile 65536" >> /etc/security/limits.conf
+echo "65536 soft nofile 65536" >> /etc/security/limits.conf
+echo "65536 hard nofile 65536" >> /etc/security/limits.conf
+ulimit -n 65536
 service 3proxy start
 EOF
 
